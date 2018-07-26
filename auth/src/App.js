@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View } from 'react-native';
 import firebase from 'firebase';
-import { Header, Button, CardSection } from './components/common';
+import { Header, Button, Spinner } from './components/common';
 import LoginForm from './components/LoginForm';
 
 class App extends Component {
@@ -10,14 +10,16 @@ class App extends Component {
   }
 
   componentWillMount() {
-    firebase.initializeApp({
-    apiKey: 'AIzaSyB2Un9838mPWzedh-_QzxairltE4aY0StE',
-    authDomain: 'auth-rn-redux-course.firebaseapp.com',
-    databaseURL: 'https://auth-rn-redux-course.firebaseio.com',
-    projectId: 'auth-rn-redux-course',
-    storageBucket: 'auth-rn-redux-course.appspot.com',
-    messagingSenderId: '345423091013'
-  });
+    const config = {
+      apiKey: 'AIzaSyB2Un9838mPWzedh-_QzxairltE4aY0StE',
+      authDomain: 'auth-rn-redux-course.firebaseapp.com',
+      databaseURL: 'https://auth-rn-redux-course.firebaseio.com',
+      projectId: 'auth-rn-redux-course',
+      storageBucket: 'auth-rn-redux-course.appspot.com',
+      messagingSenderId: '345423091013'
+    };
+
+    firebase.initializeApp(config);
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -32,21 +34,16 @@ class App extends Component {
     switch (this.state.loggedIn) {
       case true:
         return (
-          <CardSection>
             <Button customOnPress={() => firebase.auth().signOut()}>
               Log Out
             </Button>
-          </CardSection>
         );
       case false:
         return <LoginForm />;
       default:
-        return (
-            <ActivityIndicator size="large" />
-        );
+        return <Spinner size="large" />; 
       }
   }
-
 
   render() {
     return (

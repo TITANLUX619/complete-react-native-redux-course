@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
+import { Text, View } from 'react-native';
 import firebase from 'firebase';
-import { Button, Card, CardSection, Input } from './common';
+import { Button, Card, CardSection, Input, Spinner } from './common';
 
 class LoginForm extends Component {
   state = { email: '', password: '', error: '', loading: false };
@@ -37,7 +37,7 @@ class LoginForm extends Component {
     if (this.state.loading) {
       return (
         <View style={styles.spinnerStyle}>
-          <ActivityIndicator size="small" />
+          <Spinner size="small" />
         </View>
       );
     }
